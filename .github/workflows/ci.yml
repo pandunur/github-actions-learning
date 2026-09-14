@@ -17,4 +17,4 @@ jobs:
       run: python --version
 
     - name: run application
-      run: pyhton app.py
+      run: python app.py
