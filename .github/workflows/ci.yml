@@ -6,7 +6,7 @@ on:
     - main
 
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,7 @@ jobs:
     - name: run lint
       run: flake8 .
 
-jobs:
+
   test:
     runs-on: ubuntu-latest
 
