@@ -13,6 +13,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      APP_ENV: ${{ vars.APP_ENV }}
+      DEMO_TOKEN: ${{ secrets.DEMO_TOKEN }}
+
     steps:
     - name: checkout repository
       uses: actions/checkout@v4
@@ -24,6 +28,24 @@ jobs:
 
     - name: install dependencies
       run:  python -m pip install -r requirements.txt
+
+    - name: show environement
+      run: echo "running in $APP_ENV"
+
+    - name: Check secret
+      run: |
+        if [ -n "$DEMO_TOKEN" ]; then
+          echo "Secret is available"
+        else
+          echo "Secret is missing"
+          exit 1
+        fi
+
+    - name: show git information
+      run: |
+        echo "repository: ${{ github.repository }}"
+        echo "ref: ${{ github.ref }}"
+        echo "commit sha: ${{ github.sha }}"
 
     - name: run test
       run:  python -m pytest
