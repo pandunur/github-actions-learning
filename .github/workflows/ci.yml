@@ -15,7 +15,7 @@ jobs:
 
     env:
       APP_ENV: ${{ vars.APP_ENV }}
-      DEMO_TOKEN: ${{ vars.DEMO_TOKEN }}
+      DEMO_TOKEN: ${{ secrets.DEMO_TOKEN }}
 
     steps:
     - name: checkout repository
