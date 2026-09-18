@@ -30,7 +30,6 @@ jobs:
         run: python -m pytest test/test_app.py
 
   integration-test:
-    needs: unit-test
     runs-on: ubuntu-latest
 
     steps:
@@ -50,7 +49,9 @@ jobs:
         run: python -m pytest test/test_integration.py
 
   build:
-    needs: integration-test
+    needs:
+      - unit-test
+      - integration-test
     runs-on: ubuntu-latest
 
     steps:
