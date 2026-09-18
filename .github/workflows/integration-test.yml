@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.11", "3.12", "3.13"]
-        on: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
 
     steps: 
       - name: checkout repository
