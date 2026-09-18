@@ -17,10 +17,6 @@ jobs:
         exclude:
           - python-version: "3.13"
           - os: windows-latest
-        
-        include:
-          - python-version: "3.14"
-          - os: ubuntu-latest
 
     steps: 
       - name: checkout repository
