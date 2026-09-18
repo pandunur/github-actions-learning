@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  unit-test:
+  runs-on: ubuntu-latest
+
+  steps: 
+    - name: checkout repository
+      uses: actions/checkout@v4
+      
+    - name: setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+        cache: "pip"
+      
+    - name: install dependencies
+      run: python -m pip install -r requirements.txt
+      
+    - name: run unit test
+      run: python -m pytest test/test_app.py
+
+  integration-test:
+  needs: unit-test
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+        cache: "pip"
+
+    - name: Install dependencies
+      run: python -m pip install -r requirements.txt
+
+    - name: Run integration tests
+      run: pytest test/test_integration.py
+
+  build:
+  needs: integration-test
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+        cache: "pip"
+
+    - name: Install dependencies
+      run: python -m pip install -r requirements.txt
+
+    - name: Build application
+      run: |
+        mkdir -p dist
+        tar -czf dist/github-actions-learning.tar.gz \
+          app.py \
+          test \
+          requirements.txt
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-app
+        path: dist/github-actions-learning.tar.gz
+
